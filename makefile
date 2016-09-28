@@ -5,4 +5,4 @@ lexer.o: lexer.c tokens.h
 	gcc -c lexer.c
 
 clean:
-	rm -f lexer.o
+	rm -f *.o
