@@ -1,3 +1,10 @@
+# Compiler Builder 8
+# Lester Young
+# Timothy Konzel
+# Remington Howell
+# Johnathan Sattler
+# John Herold
+
 lextest: lexer.o input.o
 	gcc -o lextest lexer.o input.o
 
@@ -8,4 +15,4 @@ input.o: input.c input.h
 	gcc -c input.c
 
 clean:
-	rm -f *.o
+	rm -f *.o lextest

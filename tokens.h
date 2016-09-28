@@ -1,3 +1,10 @@
+// Compiler Builder 8
+// Lester Young
+// Timothy Konzel
+// Remington Howell
+// Johnathan Sattler
+// John Herold
+
 typedef enum token {
   nulsym = 1, identsym, numbersym, plussym, minussym,
   multsym, slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
@@ -13,8 +20,7 @@ char * reservedWords[] = {
 	"do", "read", "write", "odd"
 };
 
-typedef struct tok {
+typedef struct {
 	char * type;
 	int id;
-	struct tok * next;
 } tok;

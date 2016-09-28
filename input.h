@@ -1,3 +1,10 @@
+// Compiler Builder 8
+// Lester Young
+// Timothy Konzel
+// Remington Howell
+// Johnathan Sattler
+// John Herold
+
 typedef struct sourceCode {
 	char c;
 	struct sourceCode * next;

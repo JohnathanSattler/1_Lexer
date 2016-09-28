@@ -1,0 +1,16 @@
+
+source code:
+------------
+var x, y;
+begin
+  x := 3;       /* This is := a % comment. */ x := 4;
+  x := y + 56;
+end.
+
+source code without comments:
+-----------------------------
+var x, y;
+begin
+  x := 3;                                     x := 4;
+  x := y + 56;
+end.

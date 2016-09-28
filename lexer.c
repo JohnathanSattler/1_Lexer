@@ -11,6 +11,7 @@
 #include "input.h"
 #include "tokens.h"
 
+// main function
 int main(int argc, const char * argv[]) {
 
 	sourceCode * code = NULL;
