@@ -47,7 +47,6 @@ sourceCode * readFile(const char * fileName, sourceCode * code) {
 	}
 
 	while(fscanf(ifp, "%c", &temp) != EOF) {
-		//printf("%c", temp);
 		sourceCode * current = (sourceCode *) malloc(sizeof(sourceCode));
 		current -> c = temp;
 		current -> next = NULL;
