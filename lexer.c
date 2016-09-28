@@ -7,13 +7,15 @@
 
 // Included libraries
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include "input.h"
 #include "tokens.h"
 
 int main(int argc, const char * argv[]) {
 
-	printf("Hello, world!\n");
+	sourceCode * code = NULL;
+	
+	handleInput(argc, argv, code);
 
 	return 0;
 }
