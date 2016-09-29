@@ -16,10 +16,7 @@ tok * parse(tok * toks, sourceCode * code) {
 	if (currentCode == NULL)
 		return toks;
 
-	currentTok = (tok *) malloc(sizeof(tok));
-	toks = currentTok;
-
-
+	
 
 	return toks;
 }
