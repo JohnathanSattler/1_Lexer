@@ -9,5 +9,5 @@
 #include "tokens.h"
 
 void printCode(sourceCode * code, int source, int clean);
-void printSourceCode(sourceCode * code, int source);
-void printCleanCode(sourceCode * code, int clean);
+void printSourceCode(sourceCode * code);
+void printCleanCode(sourceCode * code);

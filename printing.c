@@ -10,18 +10,18 @@
 
 void printCode(sourceCode * code, int source, int clean) {
 
-	printSourceCode(code, source);
-	printCleanCode(code, clean);
+	if (source == 1)
+		printSourceCode(code);
+
+	if (clean == 1)
+		printCleanCode(code);
 
 	return;
 }
 
-void printSourceCode(sourceCode * code, int source) {
+void printSourceCode(sourceCode * code) {
 
 	sourceCode * current = code;
-
-	if(source == 0)
-		return;
 
 	printf("\n");
 	printf("source code:\n");
@@ -37,13 +37,10 @@ void printSourceCode(sourceCode * code, int source) {
 	return;
 }
 
-void printCleanCode(sourceCode * code, int clean) {
+void printCleanCode(sourceCode * code) {
 
 	sourceCode * current = code;
 	int comment = 0;
-
-	if(clean == 0)
-		return;
 
 	printf("\n");
 	printf("source code without comments:\n");
@@ -61,9 +58,9 @@ void printCleanCode(sourceCode * code, int clean) {
 
 		if (comment == 1 && current -> next != NULL && current -> c == '*' && current -> next -> c == '/') {
 			comment = 0;
-			current = current -> next;
-			current = current -> next;
+			current = current -> next -> next;
 			printf("  ");
+			continue;
 		}
 
 		if (comment == 0)
