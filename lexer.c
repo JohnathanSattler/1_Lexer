@@ -9,14 +9,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "input.h"
+#include "parse.h"
+#include "printing.h"
 #include "tokens.h"
+
+char * reservedWords[] = {
+  "const", "var", "procedure", "call", "begin",
+  "end", "end", "if", "then", "else", "while",
+  "do", "read", "write", "odd"
+};
 
 // main function
 int main(int argc, const char * argv[]) {
 
 	sourceCode * code = NULL;
-	
-	handleInput(argc, argv, code);
+	tok * toks = NULL;
+
+	int * source = (int *) malloc(sizeof(int));
+	int * clean = (int *) malloc(sizeof(int));
+
+	code = handleInput(argc, argv, code, source, clean);
+
+	printCode(code, *source, *clean);
+
+	toks = parse(toks, code);
 
 	return 0;
 }

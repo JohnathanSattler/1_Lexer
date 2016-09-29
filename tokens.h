@@ -5,6 +5,9 @@
 // Johnathan Sattler
 // John Herold
 
+#ifndef _tokensh_
+#define _tokensh_
+
 typedef enum token {
   nulsym = 1, identsym, numbersym, plussym, minussym,
   multsym, slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
@@ -14,13 +17,14 @@ typedef enum token {
   readsym , elsesym
 } token_type;
 
-char * reservedWords[] = {
-	"const", "var", "procedure", "call", "begin",
-	"end", "end", "if", "then", "else", "while",
-	"do", "read", "write", "odd"
-};
+typedef struct sourceCode {
+  char c;
+  struct sourceCode * next;
+} sourceCode;
 
-typedef struct {
+typedef struct tok {
 	char * type;
 	int id;
 } tok;
+
+#endif
