@@ -5,14 +5,20 @@
 # Johnathan Sattler
 # John Herold
 
-lextest: lexer.o input.o
-	gcc -o lextest lexer.o input.o
+lextest: lexer.o parse.o input.o printing.o
+	gcc -o lextest lexer.o parse.o input.o printing.o
 
-lexer.o: lexer.c input.h tokens.h
+lexer.o: lexer.c parse.h input.h printing.h tokens.h
 	gcc -c lexer.c
 
-input.o: input.c input.h
+parse.o: parse.c parse.h tokens.h
+	gcc -c parse.c
+
+input.o: input.c input.h tokens.h
 	gcc -c input.c
+
+printing.o: printing.c printing.h tokens.h
+	gcc -c printing.c
 
 clean:
 	rm -f *.o lextest

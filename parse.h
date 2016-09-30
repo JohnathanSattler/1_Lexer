@@ -10,5 +10,4 @@
 #include <stdlib.h>
 #include "tokens.h"
 
-sourceCode * handleInput(int argc, const char * argv[], sourceCode * code, int * s, int * c);
-sourceCode * readFile(const char * fileName, sourceCode * code);
+tok * parse(tok * toks, sourceCode * code);
