@@ -23,5 +23,7 @@ int main(int argc, const char * argv[]) {
 
 	toks = parse(toks, code);
 
+	printToks(toks);
+
 	return 0;
 }

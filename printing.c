@@ -75,3 +75,7 @@ void printCleanCode(sourceCode * code) {
 
 	return;
 }
+
+void printToks(tok * toks) {
+
+}

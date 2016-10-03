@@ -11,3 +11,4 @@
 #include "tokens.h"
 
 tok * parse(tok * toks, sourceCode * code);
+char * getNextTok(sourceCode * code);

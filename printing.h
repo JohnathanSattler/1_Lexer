@@ -11,3 +11,4 @@
 void printCode(sourceCode * code, int source, int clean);
 void printSourceCode(sourceCode * code);
 void printCleanCode(sourceCode * code);
+void printToks(tok * toks);

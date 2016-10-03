@@ -25,7 +25,7 @@ typedef struct sourceCode {
 typedef struct tok {
 	int isNumber;
   union {
-    char * type;
+    char * str;
     int number;
   };
   int error;

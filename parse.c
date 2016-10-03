@@ -35,3 +35,7 @@ tok * parse(tok * toks, sourceCode * code) {
 
 	return toks;
 }
+
+char * getNextTok(sourceCode * code) {
+
+}
