@@ -16,13 +16,21 @@ char * reservedWords[] = {
 
 int numReservedWords = 14;
 
+char * symbols[] = {
+	"+", "-", "*", "/", "=", "<>",
+	"<=", "<", ">=", ">=", ":=",
+	",", ";", ".", "(", ")"
+};
+
+int numSymbols = 16;
+
 tok * parse(tok * toks, sourceCode * code) {
 
 	sourceCode * currentCode = code;
 	tok * currentTok = NULL;
 
 	while (currentCode != NULL) {
-		
+
 	}
 
 	return toks;
