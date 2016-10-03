@@ -8,7 +8,7 @@
 lextest: lexer.o parse.o input.o printing.o
 	gcc -o lextest lexer.o parse.o input.o printing.o
 
-lexer.o: lexer.c parse.h input.h printing.h tokens.h
+lexer.o: lexer.c lexer.h parse.h input.h printing.h tokens.h
 	gcc -c lexer.c
 
 parse.o: parse.c parse.h tokens.h
