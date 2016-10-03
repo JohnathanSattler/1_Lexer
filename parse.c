@@ -21,10 +21,9 @@ tok * parse(tok * toks, sourceCode * code) {
 	sourceCode * currentCode = code;
 	tok * currentTok = NULL;
 
-	if (currentCode == NULL)
-		return toks;
-
-	
+	while (currentCode != NULL) {
+		
+	}
 
 	return toks;
 }
