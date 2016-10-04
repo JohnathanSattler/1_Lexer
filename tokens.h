@@ -10,7 +10,7 @@
 
 typedef enum token {
   nulsym = 1, identsym, numbersym, plussym, minussym,
-  multsym, slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
+  multsym, slashsym, oddsym, eqlsym, neqsym, lessym, leqsym,
   gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
   periodsym, becomessym, beginsym, endsym, ifsym, thensym,
   whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
@@ -23,8 +23,17 @@ typedef struct sourceCode {
 } sourceCode;
 
 typedef struct tok {
-	char * type;
-	int id;
+	int isNumber;
+  union {
+    char * str;
+    int number;
+  };
+  int error;
+  union {
+	 int id;
+   char * msg;
+  };
+  struct tok * next;
 } tok;
 
 #endif

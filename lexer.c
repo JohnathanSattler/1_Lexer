@@ -6,18 +6,7 @@
 // John Herold
 
 // Included libraries
-#include <stdio.h>
-#include <stdlib.h>
-#include "input.h"
-#include "parse.h"
-#include "printing.h"
-#include "tokens.h"
-
-char * reservedWords[] = {
-  "const", "var", "procedure", "call", "begin",
-  "end", "end", "if", "then", "else", "while",
-  "do", "read", "write", "odd"
-};
+#include "lexer.h"
 
 // main function
 int main(int argc, const char * argv[]) {
@@ -33,6 +22,8 @@ int main(int argc, const char * argv[]) {
 	printCode(code, *source, *clean);
 
 	toks = parse(toks, code);
+
+	printToks(toks);
 
 	return 0;
 }

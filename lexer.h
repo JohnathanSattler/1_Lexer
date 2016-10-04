@@ -5,10 +5,10 @@
 // Johnathan Sattler
 // John Herold
 
+// Included libraries
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include "input.h"
+#include "parse.h"
+#include "printing.h"
 #include "tokens.h"
-
-tok * parse(tok * toks, sourceCode * code);
-char * getNextTok(sourceCode * code);
