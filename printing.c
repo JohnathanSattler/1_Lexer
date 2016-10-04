@@ -77,5 +77,40 @@ void printCleanCode(sourceCode * code) {
 }
 
 void printToks(tok * toks) {
+	
+	tok * current = toks;
+	
+	
+	printf("\n");
+	printf("tokens:\n");
+	printf("-----------------------------\n");
+	
+	
+	while(current != NULL){
+		
+		if (isNumber == 1){
+			printf("%d", current.number);
+			printf("\t");
+		}
+		else{
+			printf("%s", current.str);
+			printf("\t");
+		}
+		
+		if (error == 1){
+			printf("Error: %s\n", current.msg);
+			
+		}
+		else{
+			printf("%d", current.id);
+		}
 
+
+		current = current->next
+	}
+
+	printf("\n");
+	
+	return; 	
+	
 }
