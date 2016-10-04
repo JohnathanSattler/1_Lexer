@@ -56,7 +56,7 @@ char * getNextTok(sourceCode * code) {
     /*
     if its not the end of the token, keep adding
     */
-    while (!isEnd(char->c), isSym, tokenString) {
+    while (!isEnd(char->c, isSym, tokenString)) {
         strcat(tokenString, char->c);
         code = code->next;
     }
