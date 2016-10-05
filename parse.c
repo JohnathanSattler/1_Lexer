@@ -31,7 +31,24 @@ tok * parse(tok * toks, sourceCode * code) {
 	tok * currentTok = NULL;
 
 	while (currentCode != NULL) {
-
+		currentTok = malloc(sizeof(tok*));
+		
+		// other things need to go here i suppose
+		// need: isNumber, the union (idk how that works), error, the other union
+		
+		currentTok->msg = getNextTok(code);
+		currentTok->next = NULL;
+		
+		// add the currentTok to toks->next if toks is not null
+		if(toks != NULL) {
+			toks->next = currentTok
+		}
+		// else set first tok to currentTok
+		else{
+			tok = currentTok;
+		}
+		
+		currentTok = NULL;
 	}
 
 	return toks;
