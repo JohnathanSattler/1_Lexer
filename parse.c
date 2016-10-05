@@ -34,10 +34,14 @@ tok * parse(tok * toks, sourceCode * code) {
 		currentTok = malloc(sizeof(tok*));
 		
 		// other things need to go here i suppose
-		// need: isNumber, the union (idk how that works), error, the other union
+		// need: isNumber, the unions (idk how that works)
 		
-		currentTok->msg = getNextTok(code);
+		currentTok->str = getNextTok(code);
+		//currentTok->id = some number, i don't quite know what this is meant to be
 		currentTok->next = NULL;
+		
+		if(strlen(currentTok->msg) > 12) currentTok->error = 1;
+		else currentTok->error = 0;
 		
 		// add the currentTok to toks->next if toks is not null
 		if(toks != NULL) {
