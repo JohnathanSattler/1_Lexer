@@ -19,7 +19,7 @@ int numReservedWords = 14;
 
 char * symbols[] = {
 	"+", "-", "*", "/", "=", "<>",
-	"<=", "<", ">=", ">=", ":=",
+	"<=", "<", ">=", ":=",
 	",", ";", ".", "(", ")"
 };
 
@@ -78,24 +78,30 @@ int isEnd(char c, int isSym, char * str) {
     next char to add is not a symbol, and vice-versa
     if either of these occur we have reached the end of a token
     */
-    if ((isSym = 1 && isalnum(c)) || (isSym == 0 && !isalnum(c)))
+    if ((isSym == 1 && isalnum(c)) || (isSym == 0 && !isalnum(c)))
         return 1;
 
     /*
     This base case is to check for duplicate symbols
     so they can be separated into different tokens
-    ex: ++ )) -- etc, these would have to be in different tokens
-    this covers all normal programming but what happens
-    if some idiot comes along and types @$%&#@$^ in the code
-        any ideas?
+    ex: ++ )) -- etc
     */
+    if (isSym == 1) {
+        if (strlen(str) >= 2)
+            return 1;
+        // this is to handle only the length 2 symbols
+        if (strlen(str) == 1) {
 
-    char lastChar;
-    if (strlen(str) > 1)
-        lastChar = str[(strlen(str)-1)];
-    if (lastChar != NULL && strcmp(lastChar, c) && c == '+'
-        && c == '-' && c == ')' && c == '(' && '<' && '>')
-        return 1;
+            if (str[0] == '<' && c != '=')
+                return 1;
+            if (str[0] == '<' && c != '>')
+                return 1;
+            if (str[0] == '>' && c != '=')
+                return 1;
+            if (str[0] == ':' && c != '=')
+                return 1;
+        }
+    }
     return 0;
 }
 
