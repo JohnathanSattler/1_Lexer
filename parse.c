@@ -40,7 +40,7 @@ tok * parse(tok * toks, sourceCode * code) {
 		//currentTok->id = some number, i don't quite know what this is meant to be
 		currentTok->next = NULL;
 		
-		if(strlen(currentTok->msg) > 12) currentTok->error = 1;
+		if(strlen(currentTok->str) > 12) currentTok->error = 1;
 		else currentTok->error = 0;
 		
 		// add the currentTok to toks->next if toks is not null
@@ -109,6 +109,12 @@ int isEnd(char c, int isSym, char * str) {
     this covers all normal programming but what happens
     if some idiot comes along and types @$%&#@$^ in the code
         any ideas?
+    */
+
+    /*
+        You should allow for duplicate symbols in the code. That way if
+        you ever wanted to add something like i++ it would work. You
+        can check if the symbol isn't allowed when checking for errors later on.
     */
 
     char lastChar;
