@@ -31,7 +31,28 @@ tok * parse(tok * toks, sourceCode * code) {
 	tok * currentTok = NULL;
 
 	while (currentCode != NULL) {
+		currentTok = malloc(sizeof(tok*));
 
+		// other things need to go here i suppose
+		// need: isNumber, the unions (idk how that works)
+
+		currentTok->str = getNextTok(code);
+		//currentTok->id = some number, i don't quite know what this is meant to be
+		currentTok->next = NULL;
+
+		if(strlen(currentTok->str) > 12) currentTok->error = 1;
+		else currentTok->error = 0;
+
+		// add the currentTok to toks->next if toks is not null
+		if(toks != NULL) {
+			toks->next = currentTok
+		}
+		// else set first tok to currentTok
+		else{
+			tok = currentTok;
+		}
+
+		currentTok = NULL;
 	}
 
 	return toks;
@@ -86,6 +107,12 @@ int isEnd(char c, int isSym, char * str) {
     so they can be separated into different tokens
     ex: ++ )) -- etc
     */
+
+    /*
+    I dont think we should have duplicate symbols, as this is
+    for get next token function and wouldn't a ++ be two separate
+        + tokens
+    */
     if (isSym == 1) {
         if (strlen(str) >= 2)
             return 1;
@@ -102,6 +129,7 @@ int isEnd(char c, int isSym, char * str) {
                 return 1;
         }
     }
+
     return 0;
 }
 
