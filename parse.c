@@ -29,16 +29,23 @@ tok * parse(tok * toks, sourceCode * code) {
 
 	sourceCode * currentCode = code;
 	tok * currentTok = NULL;
+	int i = 0;
 
 	while (currentCode != NULL) {
 		currentTok = malloc(sizeof(tok*));
 
 		// other things need to go here i suppose
-		// need: isNumber, the unions (idk how that works)
+		// need: the unions (idk how that works), id, number, msg
 
 		currentTok->str = getNextTok(code);
 		//currentTok->id = some number, i don't quite know what this is meant to be
+		currentTok->number = i;
+		i++;
+		
 		currentTok->next = NULL;
+		
+		if(isnumber(currentTok->str) currentTok->isNumber = 1;
+		else currentTok->isNumber = 0;
 
 		if(strlen(currentTok->str) > 12) currentTok->error = 1;
 		else currentTok->error = 0;
