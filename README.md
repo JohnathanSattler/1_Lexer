@@ -2,6 +2,6 @@
 
 Compile:  make
 
-run:      ./lextest [params] [file]
+run:      ./lexer [params] [file]
 
-Example:  ./lextest --source --clean input.pl0
+Example:  ./lexer --source --clean input.pl0
