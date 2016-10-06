@@ -311,6 +311,9 @@ tok * getNextTok(sourceCode * code) {
         p[0] = c;
         p[1] = '\0';
 
+        if (code -> next != NULL && c == '/' && code -> next -> c == '*')
+            break;
+
         if (isNum)
             tokenNum = tokenNum * 10 + (c - '0');
         else
