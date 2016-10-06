@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
 
 	printCode(code, *source, *clean);
 
-	toks = parse(toks, code);
+	toks = lex(toks, code);
 
 	printToks(toks);
 

@@ -23,17 +23,14 @@ typedef struct sourceCode {
 } sourceCode;
 
 typedef struct tok {
-	int isNumber;
-  	union {
-    		char * str;
-    		int number;
-  	};
-  	int error;
-  	union {
-	 	int id;
-   		char * msg;
-  	};
-  	struct tok * next;
+  union {
+   	char * str;
+   	int number;
+  };
+  int error;
+  int id;
+  char * msg;
+  struct tok * next;
 } tok;
 
 #endif

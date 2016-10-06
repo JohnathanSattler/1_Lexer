@@ -19,124 +19,336 @@ int numReservedWords = 14;
 
 char * symbols[] = {
 	"+", "-", "*", "/", "=", "<>",
-	"<=", "<", ">=", ":=",
+	"<=", "<", ">=", ">", ":=",
 	",", ";", ".", "(", ")"
 };
 
 int numSymbols = 16;
 
-tok * parse(tok * toks, sourceCode * code) {
+tok * lex(tok * toks, sourceCode * code) {
 
 	sourceCode * currentCode = code;
 	tok * currentTok = NULL;
-	int i = 0;
+    tok * lastTok = NULL;
+    int i, reserved, skips, comment = 0;
+    char num[100];
 
 	while (currentCode != NULL) {
-		currentTok = malloc(sizeof(tok*));
 
-		// other things need to go here i suppose
-		// need: the unions (idk how that works), id, number, msg
+        // if space, skip
+        if (currentCode -> c == ' ' || currentCode -> c == '\t' || currentCode -> c == '\n') {
+            currentCode = currentCode -> next;
+            continue;
+        }
 
-		currentTok->str = getNextTok(code);
-		//currentTok->id = some number, i don't quite know what this is meant to be
-		currentTok->number = i;
-		i++;
-		
-		currentTok->next = NULL;
-		
-		if(isnumber(currentTok->str) currentTok->isNumber = 1;
-		else currentTok->isNumber = 0;
+        // if starting comment, skip
+        if (comment == 0 && currentCode -> next != NULL && currentCode -> c == '/' && currentCode -> next -> c == '*') {
+            comment = 1;
+            currentCode = currentCode -> next -> next;
+            continue;
+        }
 
-		if(strlen(currentTok->str) > 12) currentTok->error = 1;
-		else currentTok->error = 0;
+        // end comment if */ encountered
+        if (comment == 1 && currentCode -> next != NULL && currentCode -> c == '*' && currentCode -> next -> c == '/') {
+            comment = 0;
+            currentCode = currentCode -> next -> next;
+            continue;
+        }
 
-		// add the currentTok to toks->next if toks is not null
-		if(toks != NULL) {
-			toks->next = currentTok
-		}
-		// else set first tok to currentTok
-		else{
-			tok = currentTok;
-		}
+        // if in comment, skip
+        if (comment == 1) {
+            currentCode = currentCode -> next;
+            continue;
+        }
 
-		currentTok = NULL;
+        // get next token
+		currentTok = getNextTok(currentCode);
+
+        if (currentTok == NULL) {
+            currentCode = currentCode -> next;
+            continue;
+        }
+
+        reserved = 0;
+
+        // Number too big error
+        if (currentTok -> id == numbersym && currentTok -> number > pow(2, 16) - 1) {
+            currentTok -> error = 1;
+            currentTok -> msg = "Number too big";
+        }
+
+        // Identifier too long error
+		if (currentTok -> id == identsym && strlen(currentTok -> str) > 12) {
+            currentTok -> error = 1;
+            currentTok -> msg = "Identifier too long";
+        }
+
+        // check for reserved word
+        for (i = 0; i < numReservedWords; i++) {
+            if (currentTok -> error == 1 || currentTok -> id == numbersym) {
+                i = -1;
+                break;
+            }
+
+            if (strcmp(reservedWords[i], currentTok -> str) == 0) {
+                break;
+            }
+        }
+
+        // continue checking for reserved word
+        switch(i) {
+            case 0: // const
+                currentTok -> id = constsym;
+                break;
+
+            case 1: // var
+                currentTok -> id = varsym;
+                break;
+
+            case 2: // procedure
+                currentTok -> id = procsym;
+                break;
+
+            case 3: // call
+                currentTok -> id = callsym;
+                break;
+
+            case 4: // begin
+                currentTok -> id = beginsym;
+                break;
+
+            case 5: // end
+                currentTok -> id = endsym;
+                break;
+
+            case 6: // if
+                currentTok -> id = ifsym;
+                break;
+
+            case 7: // then
+                currentTok -> id = thensym;
+                break;
+
+            case 8: // else
+                currentTok -> id = elsesym;
+                break;
+
+            case 9: // while
+                currentTok -> id = whilesym;
+                break;
+
+            case 10: // do
+                currentTok -> id = dosym;
+                break;
+
+            case 11: // read
+                currentTok -> id = readsym;
+                break;
+
+            case 12: // write
+                currentTok -> id = writesym;
+                break;
+
+            case 13: // odd
+                currentTok -> id = oddsym;
+                break;
+
+            default:
+                break;
+        }
+
+        // check for known symbols
+        for (i = 0; i < numSymbols; i++) {
+            if (currentTok -> error == 1 || currentTok -> id == numbersym) {
+                i = -1;
+                break;
+            }
+
+            if (strcmp(symbols[i], currentTok -> str) == 0) {
+                break;
+            }
+        }
+
+        // continue checking if symbol is known or unknown
+        switch(i) {
+            case 0: // +
+                currentTok -> id = plussym;
+                break;
+
+            case 1: // -
+                currentTok -> id = minussym;
+                break;
+
+            case 2: // *
+                currentTok -> id = multsym;
+                break;
+
+            case 3: // /
+                currentTok -> id = slashsym;
+                break;
+
+            case 4: // =
+                currentTok -> id = eqlsym;
+                break;
+
+            case 5: // <>
+                currentTok -> id = neqsym;
+                break;
+
+            case 6: // <=
+                currentTok -> id = leqsym;
+                break;
+
+            case 7: // <
+                currentTok -> id = lessym;
+                break;
+
+            case 8: // >=
+                currentTok -> id = geqsym;
+                break;
+
+            case 9: // >
+                currentTok -> id = gtrsym;
+                break;
+
+            case 10: // :=
+                currentTok -> id = becomessym;
+                break;
+
+            case 11: // ,
+                currentTok -> id = commasym;
+                break;
+
+            case 12: // ;
+                currentTok -> id = semicolonsym;
+                break;
+
+            case 13: // .
+                currentTok -> id = periodsym;
+                break;
+
+            case 14: // (
+                currentTok -> id = lparentsym;
+                break;
+
+            case 15: // )
+                currentTok -> id = rparentsym;
+                break;
+
+            default: // check for unknown symbol
+                if (currentTok -> id == numbersym || isalnum(currentTok -> str[0]))
+                    break;
+                else {
+                    currentTok -> id = nulsym;
+                    currentTok -> error = 1;
+                    currentTok -> msg = "Unknown symbol";
+                }
+                break;
+        }
+
+        // set first tok to currentTok
+        if (lastTok == NULL) {
+            lastTok = currentTok;
+            toks = lastTok;
+        } else { // add the currentTok to toks->next if toks is not null
+            lastTok -> next = currentTok;
+            lastTok = lastTok -> next;
+        }
+
+        // skip over used characters in the code
+        if (currentTok -> id == numbersym) {
+            sprintf(num, "%d", currentTok -> number);
+            skips = strlen(num);
+        } else {
+            skips = strlen(currentTok -> str);
+        }
+
+        for (i = 0; i < skips; i++) {
+            currentCode = currentCode -> next;
+        }
 	}
 
 	return toks;
 }
 
-char * getNextTok(sourceCode * code) {
-    if (code == NULL || code->c == NULL) { // null checking
-        return code;
-    }
+tok * getNextTok(sourceCode * code) {
+
+    int isNum = 0, isAlp = 0, isSym = 0;
+    char tokenString[100] = "";
+    int tokenNum = 0;
+    char p[2], c = code -> c;
+    tok * returnTok;
+
+    if (code == NULL) // null checking
+        return NULL;
+
+    returnTok = (tok *) malloc(sizeof(tok));
+    returnTok -> error = 0;
+    returnTok -> next = NULL;
+    returnTok -> str = (char *) malloc(sizeof(char) * 2);
 
     /*
     This is to check if the first char in token
     is a symbol or not, if it changes after
     then we know its end of a token
     */
-    int isSym = 0;
-    if (!isalnum(code->c))
+    if (isalpha(c)) {
+        isAlp = 1;
+        returnTok -> id = identsym;
+    } else if (isdigit(c)) {
+        isNum = 1;
+        returnTok -> id = numbersym;
+    } else {
         isSym = 1;
-
-    char * tokenString = "";
+        returnTok -> id = nulsym;
+    }
 
     /*
     if its not the end of the token, keep adding
     */
-    while (!isEnd(char->c, isSym, tokenString)) {
-        strcat(tokenString, char->c);
-        code = code->next;
-    }
+    while (!isEnd(c, isSym, isNum, isAlp)) {
 
-    return tokenString;
+        p[0] = c;
+        p[1] = '\0';
+
+        if (isNum)
+            tokenNum = tokenNum * 10 + (c - '0');
+        else
+            strcat(tokenString, p);
+
+        code = code -> next;
+
+        if (code == NULL)
+            break;
+
+        c = code -> c;
+    }  
+
+    if (isNum)
+        returnTok -> number = tokenNum;
+    else
+        strcpy(returnTok -> str, tokenString);
+
+    return returnTok;
 }
 
-int isEnd(char c, int isSym, char * str) {
+int isEnd(char c, int isSym, int isNum, int isAlp) {
+
     /*
     This base case checks to see if the next char
     to be added is null, new line, white space,
     or tab, if it is any of these we have reached
     the end of a token
     */
-    if (c == NULL ||c == '\n' || c == ' ' || c == '\t')
+    if (c == '\n' || c == ' ' || c == '\t')
         return 1;
     /*
     This base case checks if it was a symbol and the
     next char to add is not a symbol, and vice-versa
     if either of these occur we have reached the end of a token
     */
-    if ((isSym == 1 && isalnum(c)) || (isSym == 0 && !isalnum(c)))
+    if ((isSym == 1 && isalnum(c)) || (isNum == 1 && !isdigit(c)) || (isAlp && !isalnum(c)))
         return 1;
-
-    /*
-    This base case is to check for duplicate symbols
-    so they can be separated into different tokens
-    ex: ++ )) -- etc
-    */
-
-    /*
-    I dont think we should have duplicate symbols, as this is
-    for get next token function and wouldn't a ++ be two separate
-        + tokens
-    */
-    if (isSym == 1) {
-        if (strlen(str) >= 2)
-            return 1;
-        // this is to handle only the length 2 symbols
-        if (strlen(str) == 1) {
-
-            if (str[0] == '<' && c != '=')
-                return 1;
-            if (str[0] == '<' && c != '>')
-                return 1;
-            if (str[0] == '>' && c != '=')
-                return 1;
-            if (str[0] == ':' && c != '=')
-                return 1;
-        }
-    }
 
     return 0;
 }
-

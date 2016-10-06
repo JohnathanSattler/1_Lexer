@@ -8,6 +8,7 @@
 // Included libraries
 #include "printing.h"
 
+// print the code
 void printCode(sourceCode * code, int source, int clean) {
 
 	if (source == 1)
@@ -19,6 +20,7 @@ void printCode(sourceCode * code, int source, int clean) {
 	return;
 }
 
+// print the source code
 void printSourceCode(sourceCode * code) {
 
 	sourceCode * current = code;
@@ -37,6 +39,7 @@ void printSourceCode(sourceCode * code) {
 	return;
 }
 
+// print the clean code
 void printCleanCode(sourceCode * code) {
 
 	sourceCode * current = code;
@@ -76,40 +79,35 @@ void printCleanCode(sourceCode * code) {
 	return;
 }
 
+// print the tokens
 void printToks(tok * toks) {
 	
 	tok * current = toks;
 	
-	
 	printf("\n");
 	printf("tokens:\n");
-	printf("-----------------------------\n");
-	
+	printf("-------\n");
 	
 	while(current != NULL){
 		
-		if (isNumber == 1){
-			printf("%d", current.number);
+		if (current -> id == numbersym){
+			printf("%d", current -> number);
 			printf("\t");
 		}
 		else{
-			printf("%s", current.str);
+			printf("%s", current -> str);
 			printf("\t");
 		}
 		
-		if (error == 1){
-			printf("Error: %s\n", current.msg);
-			
-		}
-		else{
-			printf("%d", current.id);
-		}
+		if (current -> error == 1)
+			printf("Error: %s\n", current -> msg);
+		else
+			printf("%d", current -> id);
 
+		printf("\n");
 
-		current = current->next
+		current = current->next;
 	}
-
-	printf("\n");
 	
 	return; 	
 	

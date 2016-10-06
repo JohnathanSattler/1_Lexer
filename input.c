@@ -8,6 +8,7 @@
 // Included libraries
 #include "input.h"
 
+// handle the arguments passed into the program
 sourceCode * handleInput(int argc, const char * argv[], sourceCode * code, int * s, int * c) {
 
 	const char * fileName;
@@ -29,6 +30,7 @@ sourceCode * handleInput(int argc, const char * argv[], sourceCode * code, int *
 	return code;
 }
 
+// read the input file
 sourceCode * readFile(const char * fileName, sourceCode * code) {
 
 	FILE * ifp;
