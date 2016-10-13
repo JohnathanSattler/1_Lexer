@@ -100,7 +100,7 @@ void printToks(tok * toks) {
 		}
 		
 		if (current -> error == 1)
-			printf("Error: %s\n", current -> msg);
+			printf("Error: %s", current -> msg);
 		else
 			printf("%d", current -> id);
 

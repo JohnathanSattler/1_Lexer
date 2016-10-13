@@ -241,7 +241,7 @@ tok * lex(tok * toks, sourceCode * code) {
                 else {
                     currentTok -> id = nulsym;
                     currentTok -> error = 1;
-                    currentTok -> msg = "Unknown symbol";
+                    currentTok -> msg = "Invalid token";
                 }
                 break;
         }
@@ -275,7 +275,7 @@ tok * getNextTok(sourceCode * code) {
 
     int isNum = 0, isAlp = 0, isSym = 0;
     char tokenString[100] = "";
-    int tokenNum = 0;
+    int tokenNum = 0, i, containsFirst = 0, containsSecond = 0;
     char p[2], c = code -> c;
     tok * returnTok;
 
@@ -308,16 +308,49 @@ tok * getNextTok(sourceCode * code) {
     */
     while (!isEnd(c, isSym, isNum, isAlp)) {
 
+        containsFirst = 0;
+        containsSecond = 0;
+
         p[0] = c;
         p[1] = '\0';
 
         if (code -> next != NULL && c == '/' && code -> next -> c == '*')
             break;
 
+        // check if the current symbol is known
+        for (i = 0; i < numSymbols; i++)
+            if (strcmp(symbols[i], tokenString) == 0) {
+                containsFirst = 1;
+                break;
+            }
+
+        // If variable starts with num
+        if (isNum && isalpha(c)) {
+            isNum = 0;
+            isAlp = 1;
+            returnTok -> id = identsym;
+            returnTok -> error = 1;
+            returnTok -> msg = "Identifier begins with number";
+        }
+
         if (isNum)
             tokenNum = tokenNum * 10 + (c - '0');
-        else
-            strcat(tokenString, p);
+
+        strcat(tokenString, p);
+
+        // check if the new symbol is known
+        for (i = 0; i < numSymbols; i++) {
+            if (strcmp(symbols[i], tokenString) == 0) {
+                containsSecond = 1;
+                break;
+            }
+        }
+
+        // if the older symbol is known, but not the new one, then use the older one
+        if (isSym && containsFirst && !containsSecond) {
+            tokenString[strlen(tokenString) - 1] = '\0';
+            break;
+        }
 
         code = code -> next;
 
@@ -350,7 +383,7 @@ int isEnd(char c, int isSym, int isNum, int isAlp) {
     next char to add is not a symbol, and vice-versa
     if either of these occur we have reached the end of a token
     */
-    if ((isSym == 1 && isalnum(c)) || (isNum == 1 && !isdigit(c)) || (isAlp && !isalnum(c)))
+    if ((isSym == 1 && isalnum(c)) || (isNum == 1 && !isalnum(c)) || (isAlp && !isalnum(c)))
         return 1;
 
     return 0;
